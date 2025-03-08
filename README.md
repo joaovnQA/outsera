@@ -34,8 +34,7 @@ Esta API RESTful fornece informações sobre os produtores de filmes que tiveram
 - **Node.js** e **npm** instalados (para testes Cypress).
 
 ### 2. **bash**
-git clone https://github.com/seu-usuario/seu-projeto.git
-cd seu-projeto
+git clone https://github.com/joaovnQA/outsera.git
 
 ### 3. **Instalar as Dependências**
     -   mvn clean install
