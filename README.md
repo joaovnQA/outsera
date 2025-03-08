@@ -33,25 +33,25 @@ Esta API RESTful fornece informações sobre os produtores de filmes que tiveram
 - **Maven** instalado.
 - **Node.js** e **npm** instalados (para testes Cypress).
 
-```bash
+### 2. **bash**
 git clone https://github.com/seu-usuario/seu-projeto.git
 cd seu-projeto
 
-- **Instalar as Dependências**
+### 3. **Instalar as Dependências**
     -   mvn clean install
 
-- **Executando a Aplicação**
+### 4. **Executando a Aplicação**
     -   mvn spring-boot:run
     -   A aplicação estará disponível em: http://localhost:8080
 
-- **Acessar o Console do Banco de Dados H2**
+### 5. **Acessar o Console do Banco de Dados H2**
     -   URL: http://localhost:8080/h2-console
     -   JDBC URL: jdbc:h2:mem:testdb
     -   Username: sa
     -   Password: (deixe em branco)
 
-- **Endpoints da API**
+### 6. **Endpoints da API**
     -   GET /movies/award-intervals
 
-- **Testes Automatizados**
+### 7. **Testes Automatizados**
     -   npm run cy:open:local
