@@ -40,7 +40,7 @@ jobs:
         run: mvn spring-boot:run &
 
       - name: ⏳ Aguardar a API estar disponível
-        run: sleep 20
+        run: sleep 600
 
   api_tests:
     needs: start_application
