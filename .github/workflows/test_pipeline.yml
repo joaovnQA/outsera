@@ -13,10 +13,10 @@ jobs:
       - name: 📥 Checkout do código
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Garante que todo o histórico do repositório seja baixado
+          fetch-depth: 0
 
       - name: 📂 Verificar estrutura do repositório
-        run: ls -R # Lista todos os arquivos para depuração
+        run: ls -R
 
       - name: ☕ Instalar Java 21
         uses: actions/setup-java@v3
@@ -32,69 +32,57 @@ jobs:
           cd joavn-api
           mvn clean install
 
-  start_application:
+  tests:
     needs: setup
     runs-on: ubuntu-latest
+    services:
+      api:
+        image: openjdk:21-jdk-slim # Imagem Docker com Java 21
+        ports:
+          - 8080:8080 # Expõe a porta 8080
+        env:
+          SPRING_PROFILES_ACTIVE: qa # Define o perfil do Spring Boot (se necessário)
+        options: >-
+          --health-cmd "curl -f http://localhost:8080/actuator/health || exit 1"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        volumes:
+          - ./joavn-api:/app # Monta o diretório do projeto no contêiner
+        working_dir: /app
     steps:
-      - name: 🚀 Iniciar a aplicação com Spring Boot
-        run: nohup mvn spring-boot:run > api.log 2>&1 &
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v3
+
+      - name: 🚀 Iniciar a API no contêiner
+        run: |
+          cd joavn-api
+          mvn spring-boot:run > api.log 2>&1 &
 
       - name: ⏳ Aguardar a API estar disponível
-        run: |
-          for i in {1..120}; do  # 10 minutos (120 tentativas de 5s)
-          if curl -s http://localhost:8080/actuator/health | grep '"status":"UP"'; then
-          echo "✅ API está rodando!"
-          exit 0
-          fi
-          echo "⏳ Aguardando API iniciar... ($((i*5)) segundos)"
-          sleep 5
-          done
-          echo "❌ API não iniciou a tempo!"
-          exit 1
-  api_tests:
-    needs: start_application
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: joavn-api/src/test/api # Define o diretório base para os comandos
-    steps:
-      - name: 📥 Checkout do código
-        uses: actions/checkout@v3
-
-      - name: 📂 Verificar estrutura da pasta API
-        run: ls -R
+        run: sleep 20
 
       - name: 🔧 Instalar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: 🔽 Instalar dependências do Cypress
-        run: npm install
+      - name: 🔽 Instalar dependências do Cypress (API)
+        run: |
+          cd joavn-api/src/test/api
+          npm install
 
       - name: 🚀 Executar testes de API com Cypress
-        run: npx cypress run
+        run: |
+          cd joavn-api/src/test/api
+          npx cypress run
 
-  web_tests:
-    needs: start_application
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: joavn-api/src/test/web # Define o diretório base para os comandos
-    steps:
-      - name: 📥 Checkout do código
-        uses: actions/checkout@v3
-
-      - name: 📂 Verificar estrutura da pasta WEB
-        run: ls -R
-
-      - name: 🔧 Instalar Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-
-      - name: 🔽 Instalar dependências do Cypress
-        run: npm install
+      - name: 🔽 Instalar dependências do Cypress (WEB)
+        run: |
+          cd joavn-api/src/test/web
+          npm install
 
       - name: 🚀 Executar testes WEB com Cypress
-        run: npx cypress run
+        run: |
+          cd joavn-api/src/test/web
+          npx cypress run
