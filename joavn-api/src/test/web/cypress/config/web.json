@@ -1,0 +1,6 @@
+{
+  "baseUrl": "https://bookcart.azurewebsites.net/",
+  "env": {
+    "environment": "web"
+  }
+}

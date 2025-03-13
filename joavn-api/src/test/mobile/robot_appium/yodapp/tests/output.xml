@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2 (Python 3.11.4 on win32)" generated="2025-01-23T17:17:49.350993" rpa="false" schemaversion="5">
+<suite id="s1" name="Home" source="C:\Users\joaon\automacao\robot_appium\yodapp\tests\home.robot">
+<test id="s1-t1" name="Deve abrir a tela principal" line="8">
+<kw name="Open Application" owner="AppiumLibrary">
+<arg>http://localhost:4723</arg>
+<arg>platformName=Android</arg>
+<arg>deviceName=Android Emulator</arg>
+<arg>automationName=UIAutomator2</arg>
+<arg>app=C:\\Users\\joaon\\automacao\\robot_appium\\yodapp\\app\\yodapp-beta.apk</arg>
+<arg>udid=emulator-5554</arg>
+<arg>autoGrantPermissions=true</arg>
+<doc>Opens a new application to given Appium server.
+Capabilities of appium server, Android and iOS,
+Please check https://appium.io/docs/en/2.1/cli/args/
+| *Option*            | *Man.* | *Description*     |
+| remote_url          | Yes    | Appium server url |
+| alias               | no     | alias             |
+| strict_ssl          | No     | allows you to send commands to an invalid certificate host like a self-signed one. |</doc>
+<status status="PASS" start="2025-01-23T17:17:49.529250" elapsed="10.268719"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-01-23T17:18:04.799633" level="INFO">Slept 5 seconds.</msg>
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-01-23T17:17:59.799111" elapsed="5.000522"/>
+</kw>
+<kw name="Wait Until Page Contains" owner="AppiumLibrary">
+<arg>${START}</arg>
+<doc>Waits until `text` appears on current page.</doc>
+<status status="PASS" start="2025-01-23T17:18:04.800321" elapsed="0.064463"/>
+</kw>
+<kw name="Click Text" owner="AppiumLibrary">
+<msg time="2025-01-23T17:18:06.488196" level="INFO">xpath criteria: //*[contains(@text,"QAX")]</msg>
+<arg>${START}</arg>
+<doc>Click text identified by ``text``.</doc>
+<status status="PASS" start="2025-01-23T17:18:04.864784" elapsed="1.624023"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-01-23T17:18:06.488807" level="INFO">${menu} = xpath=//android.widget.ImageButton[@content-desc="Open navigation drawer"]</msg>
+<var>${menu}</var>
+<arg>xpath=//android.widget.ImageButton[@content-desc="Open navigation drawer"]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-01-23T17:18:06.488807" elapsed="0.000000"/>
+</kw>
+<kw name="Wait Until Element Is Visible" owner="AppiumLibrary">
+<msg time="2025-01-23T17:18:06.550447" level="INFO">xpath criteria: //android.widget.ImageButton[@content-desc="Open navigation drawer"]</msg>
+<arg>${menu}</arg>
+<arg>5</arg>
+<doc>Waits until element specified with `locator` is visible.</doc>
+<status status="PASS" start="2025-01-23T17:18:06.488807" elapsed="0.061640"/>
+</kw>
+<kw name="Click Element" owner="AppiumLibrary">
+<msg time="2025-01-23T17:18:06.551455" level="INFO">Clicking element 'xpath=//android.widget.ImageButton[@content-desc="Open navigation drawer"]'.</msg>
+<msg time="2025-01-23T17:18:06.671161" level="INFO">xpath criteria: //android.widget.ImageButton[@content-desc="Open navigation drawer"]</msg>
+<arg>${menu}</arg>
+<doc>Click element identified by `locator`.</doc>
+<status status="PASS" start="2025-01-23T17:18:06.550447" elapsed="0.120714"/>
+</kw>
+<kw name="Close Application" owner="AppiumLibrary">
+<doc>Closes the current application and also close webdriver session.</doc>
+<status status="PASS" start="2025-01-23T17:18:06.671161" elapsed="0.377685"/>
+</kw>
+<status status="PASS" start="2025-01-23T17:17:49.528245" elapsed="17.520601"/>
+</test>
+<status status="PASS" start="2025-01-23T17:17:49.351994" elapsed="17.697859"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Home" id="s1" pass="1" fail="0" skip="0">Home</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2025-01-23T17:17:49.346820" level="WARN">Error in file 'C:\Users\joaon\automacao\robot_appium\yodapp\tests\home.robot' on line 4: Singular section headers like '*** Variable ***' are deprecated. Use plural format like '*** Variables ***' instead.</msg>
+</errors>
+</robot>

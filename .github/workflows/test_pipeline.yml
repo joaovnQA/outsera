@@ -1,0 +1,63 @@
+name: API and WEB Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v3
+
+      - name: 🔧 Instalar Java e Maven
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: 🔽 Instalar dependências do Maven
+        run: mvn clean install
+
+  start_application:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚀 Iniciar a aplicação com Spring Boot
+        run: mvn spring-boot:run &
+
+      - name: ⏳ Aguardar a API estar disponível
+        run: sleep 20
+
+  api_tests:
+    needs: start_application
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔧 Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 🔽 Instalar dependências do Cypress
+        run: npm install
+
+      - name: 🚀 Executar testes de API com Cypress
+        run: npx cypress run --spec "cypress/e2e/api/**/*.cy.js"
+
+  web_tests:
+    needs: start_application
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔧 Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 🔽 Instalar dependências do Cypress
+        run: npm install
+
+      - name: 🚀 Executar testes WEB com Cypress
+        run: npx cypress run --spec "cypress/e2e/web/**/*.cy.js"

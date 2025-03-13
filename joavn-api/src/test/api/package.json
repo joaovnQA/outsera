@@ -1,0 +1,32 @@
+{
+  "name": "outsera-e2e",
+  "version": "1.0.0",
+  "description": "Automation tests Outsera",
+  "main": "index.js",
+  "scripts": {
+    "cy:open:api": "cypress open --env configFile=api"
+  },
+  "author": "joao nascimento",
+  "license": "MIT",
+  "devDependencies": {
+    "@badeball/cypress-cucumber-preprocessor": "^22.0.1",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.4",
+    "@faker-js/faker": "^9.6.0",
+    "@shelex/cypress-allure-plugin": "^2.40.2",
+    "@types/chai-json-schema": "^1.4.10",
+    "allure-commandline": "^2.22.1",
+    "chai-json-schema": "^1.5.1",
+    "cypress": "^12.17.4",
+    "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-multi-reporters": "^2.0.5",
+    "cypress-plugin-api": "^2.11.1",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.25.1",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.4.1",
+    "mochawesome-report-generator": "^6.2.0"
+  },
+  "dependencies": {
+    "node-modules": "^1.0.1"
+  }
+}

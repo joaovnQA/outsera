@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-03-13T14:12:16.118Z",
+    "end": "2025-03-13T14:12:16.458Z",
+    "duration": 340,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4cfa2ff5-66fa-46f2-b43f-15bb492f6072",
+      "title": "",
+      "fullFile": "cypress\\e2e\\api\\post-premios-e2e.cy.js",
+      "file": "cypress\\e2e\\api\\post-premios-e2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "b004e5b8-e9e8-4324-8624-f8293d13193b",
+          "title": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Validar que um novo filme é criado com sucesso",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Validar que um novo filme é criado com sucesso",
+              "timedOut": null,
+              "duration": 131,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"POST\",\n  url: \"/movies\",\n  body: body\n}).then(response => {\n  expect(response.status).to.eq(201);\n  expect(response.body.id).to.be.a(\"number\");\n  expect(response.body.year).to.be.a(\"number\");\n  expect(response.body.title).to.be.a(\"string\");\n  expect(response.body.studios).to.be.a(\"string\");\n  expect(response.body.producers).to.be.a(\"string\");\n  expect(response.body.winner).to.be.a(\"boolean\");\n  movieId = response.body.id;\n});",
+              "err": {},
+              "uuid": "e1c7c109-dbb8-4722-86aa-95bf04499c83",
+              "parentUUID": "b004e5b8-e9e8-4324-8624-f8293d13193b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validar que o filme foi criado no GET movies",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Validar que o filme foi criado no GET movies",
+              "timedOut": null,
+              "duration": 54,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"GET\",\n  url: `/movies/${movieId}`\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.id).to.eq(movieId);\n});",
+              "err": {},
+              "uuid": "3eedb8b8-8016-4163-98c4-8f2a7545dc54",
+              "parentUUID": "b004e5b8-e9e8-4324-8624-f8293d13193b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Tentar criar um novo filme não enviando o body",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Tentar criar um novo filme não enviando o body",
+              "timedOut": null,
+              "duration": 50,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"POST\",\n  url: \"/movies\",\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(400);\n  expect(response.body.error).to.eq(\"Bad Request\");\n});",
+              "err": {},
+              "uuid": "95d9121f-b615-481b-ade5-ef0ae8ece4f0",
+              "parentUUID": "b004e5b8-e9e8-4324-8624-f8293d13193b",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deve responder em menos de 500ms",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Deve responder em menos de 500ms",
+              "timedOut": null,
+              "duration": 50,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"POST\",\n  url: \"/movies\",\n  body: body\n}).then(response => {\n  expect(response.status).to.eq(201);\n  expect(response.duration).to.be.lessThan(500);\n});",
+              "err": {},
+              "uuid": "2e17b0f9-7145-4873-8d0b-7ea71bea697e",
+              "parentUUID": "b004e5b8-e9e8-4324-8624-f8293d13193b",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "e1c7c109-dbb8-4722-86aa-95bf04499c83",
+            "3eedb8b8-8016-4163-98c4-8f2a7545dc54",
+            "95d9121f-b615-481b-ade5-ef0ae8ece4f0",
+            "2e17b0f9-7145-4873-8d0b-7ea71bea697e"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 285,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "joaovn-api/src/api/cypress/reports/allure-results",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

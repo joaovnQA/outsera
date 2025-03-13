@@ -1,0 +1,182 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-03-13T14:12:06.625Z",
+    "end": "2025-03-13T14:12:07.067Z",
+    "duration": 442,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "0f2d57a1-8ba2-41c9-b7cf-9ebb8848cf1f",
+      "title": "",
+      "fullFile": "cypress\\e2e\\api\\delete-premios-e2e.cy.js",
+      "file": "cypress\\e2e\\api\\delete-premios-e2e.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "8df9589b-303c-461a-96ee-87d3551756e6",
+          "title": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Validar que um novo filme é criado com sucesso",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Validar que um novo filme é criado com sucesso",
+              "timedOut": null,
+              "duration": 118,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"POST\",\n  url: \"/movies\",\n  body: body\n}).then(response => {\n  expect(response.status).to.eq(201);\n  expect(response.body.id).to.be.a(\"number\");\n  expect(response.body.year).to.be.a(\"number\");\n  expect(response.body.title).to.be.a(\"string\");\n  expect(response.body.studios).to.be.a(\"string\");\n  expect(response.body.producers).to.be.a(\"string\");\n  expect(response.body.winner).to.be.a(\"boolean\");\n  movieId = response.body.id;\n});",
+              "err": {},
+              "uuid": "d8e20102-a175-4a3f-8e39-947a3f71cc37",
+              "parentUUID": "8df9589b-303c-461a-96ee-87d3551756e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validar que o filme foi criado no GET movies",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Validar que o filme foi criado no GET movies",
+              "timedOut": null,
+              "duration": 57,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"GET\",\n  url: `/movies/${movieId}`\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.id).to.eq(movieId);\n});",
+              "err": {},
+              "uuid": "30a5cedf-c198-4574-a35f-7078f54ca291",
+              "parentUUID": "8df9589b-303c-461a-96ee-87d3551756e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Deletar novo filme criado",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Deletar novo filme criado",
+              "timedOut": null,
+              "duration": 101,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"DELETE\",\n  url: `/movies/${movieId}`\n}).then(response => {\n  expect(response.status).to.eq(204);\n  expect(response.duration).to.be.lessThan(500);\n});",
+              "err": {},
+              "uuid": "edc650e2-e03b-4757-ae6d-37ff0e56c846",
+              "parentUUID": "8df9589b-303c-461a-96ee-87d3551756e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Validar que o filme foi deletado",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Validar que o filme foi deletado",
+              "timedOut": null,
+              "duration": 54,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"GET\",\n  url: `/movies/${movieId}`,\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(404);\n});",
+              "err": {},
+              "uuid": "48a7225c-7cfe-4525-80c1-bdb9756e0852",
+              "parentUUID": "8df9589b-303c-461a-96ee-87d3551756e6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Tentar deletar filme com ID inexistente",
+              "fullTitle": "Consulta de vencedores da categoria Pior Filme do Golden Raspberry Awards Tentar deletar filme com ID inexistente",
+              "timedOut": null,
+              "duration": 51,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.api({\n  method: \"DELETE\",\n  url: `/movies/$$$`,\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(400);\n  expect(response.body.error).to.eq(\"Bad Request\");\n});",
+              "err": {},
+              "uuid": "f9dc95a8-e98b-4b88-a782-cb5956e4eaee",
+              "parentUUID": "8df9589b-303c-461a-96ee-87d3551756e6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d8e20102-a175-4a3f-8e39-947a3f71cc37",
+            "30a5cedf-c198-4574-a35f-7078f54ca291",
+            "edc650e2-e03b-4757-ae6d-37ff0e56c846",
+            "48a7225c-7cfe-4525-80c1-bdb9756e0852",
+            "f9dc95a8-e98b-4b88-a782-cb5956e4eaee"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 381,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "id": "default",
+        "reportDir": "joaovn-api/src/api/cypress/reports/allure-results",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

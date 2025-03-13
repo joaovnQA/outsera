@@ -1,0 +1,20 @@
+{
+  "name": "robot_appium",
+  "version": "1.0.0",
+  "description": "Projeto de integração do Robot Framework com Appium para testes automatizados.",
+  "main": "index.js",
+  "scripts": {
+    "start": "appium",
+    "doctor": "appium-doctor",
+    "check-env": "appium-doctor --android --ios"
+  },
+  "author": "Seu Nome",
+  "license": "ISC",
+  "dependencies": {
+    "appium": "^2.0.1",
+    "appium-doctor": "^1.16.2"
+  },
+  "devDependencies": {
+    "appium-uiautomator2-driver": "^3.9.9"
+  }
+}

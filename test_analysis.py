@@ -1,60 +1,75 @@
 import os
-import openai
+import json
+import subprocess
 import asyncio
+import openai
+from fpdf import FPDF
+# Diretório onde os testes Cypress estão localizados
+TESTS_FOLDER = "./joavn-api/src/test/integration/"
 
-# OpenAI Configuration
-openai.api_key ="$$$"
+# Diretório onde o relatório será salvo
+OUTPUT_FOLDER = "./joavn-api/src/test/integration/cypress/e2e/api"
+REPORT_PATH = f"{OUTPUT_FOLDER}/relatorio_testes.pdf"
 
-# Directory containing test files
-TESTS_FOLDER = "./joavn-api/src/test/integration/cypress/e2e/back/consulta-premios"
+# OpenAI API Key (se necessário)
+openai.api_key =""
 
-def get_test_files(folder_path):
-    """Recupera todos os arquivos de teste do diretório especificado."""
-    test_files = []
-    for root, _, files in os.walk(folder_path):
-        for file in files:
-            if file.endswith(('.js', '.ts', '.feature')):
-                test_files.append(os.path.join(root, file))
-    return test_files
-
-def read_file_content(file_path):
-    """Lê o conteúdo de um arquivo de teste."""
-    with open(file_path, 'r', encoding='utf-8') as file:
-        return file.read()
-
-async def analyze_test_with_gpt35(test_content):
-    """Envia o conteúdo do teste para o GPT-3.5 Turbo para análise e sugestões."""
-    prompt = f"Analise os seguintes cenários de teste e forneça sugestões de melhorias ou casos de borda ausentes. Responda em português:\n{test_content}"
+def is_cypress_installed():
+    """Verifica se o Cypress está instalado e acessível."""
     try:
-        response = await openai.ChatCompletion.acreate(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        return f"Erro ao analisar o arquivo: {e}"
+        subprocess.run(["npx", "cypress", "-v"], capture_output=True, text=True, check=True)
+        return True
+    except subprocess.CalledProcessError:
+        return False
+    except FileNotFoundError:
+        return False
 
-async def generate_analysis_report():
-    """Gera um relatório de análise para todos os arquivos de teste no projeto."""
-    test_files = get_test_files(TESTS_FOLDER)
-    report = "Relatório de Análise de Testes\n\n"
-    
-    for file_path in test_files:
-        print(f"Analisando: {file_path}")
-        test_content = read_file_content(file_path)
-        analysis = await analyze_test_with_gpt35(test_content)
-        
-        report += f"Arquivo: {file_path}\n"
-        report += f"Sugestões:\n{analysis}\n"
-        report += "-" * 50 + "\n"
-    
-    output_path = 'analysis/relatorio_analise_testes.txt'
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    
-    with open(output_path, 'w', encoding='utf-8') as report_file:
-        report_file.write(report)
-    
-    print(f"Análise concluída! Confira o relatório em '{output_path}'.")
+def run_cypress_tests():
+    """Executa os testes do Cypress no diretório correto e captura os resultados."""
+    print("🔄 Executando testes do Cypress...")
+
+    # Verifica se o Cypress está instalado
+    if not is_cypress_installed():
+        print("❌ Cypress não encontrado! Certifique-se de que ele está instalado via `npm install cypress --save-dev`.")
+        return None
+
+    result_file = f"{OUTPUT_FOLDER}/cypress_results.json"
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+
+    command = ["npx", "cypress", "run", "--reporter", "json"]
+
+    try:
+        # Executa o Cypress no diretório correto e captura a saída
+        result = subprocess.run(
+            command,
+            cwd=os.path.abspath(TESTS_FOLDER),  # Caminho absoluto evita erro de diretório
+            capture_output=True,
+            text=True,
+            check=True
+        )
+
+        # Salva a saída JSON no arquivo de resultados
+        with open(result_file, "w", encoding="utf-8") as file:
+            file.write(result.stdout)
+
+        print("✅ Testes Cypress executados com sucesso.")
+        return result_file
+
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Erro ao executar Cypress: {e.stderr}")
+        return None
+    except FileNotFoundError:
+        print("❌ Erro: Cypress não encontrado no sistema.")
+        return None
+
+async def main():
+    """Executa os testes, analisa os resultados e gera o relatório final."""
+    result_file = run_cypress_tests()
+    if not result_file:
+        print("❌ Cypress falhou. Abortando geração do relatório.")
+        return
+
+    print("✅ Processo concluído com sucesso.")
 
 if __name__ == "__main__":
-    asyncio.run(generate_analysis_report())
+    asyncio.run(main())
