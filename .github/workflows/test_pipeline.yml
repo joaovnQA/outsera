@@ -37,10 +37,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🚀 Iniciar a aplicação com Spring Boot
-        run: mvn spring-boot:run &
+        run: nohup mvn spring-boot:run > api.log 2>&1 &
 
       - name: ⏳ Aguardar a API estar disponível
-        run: sleep 600
+        run: sleep 20
 
   api_tests:
     needs: start_application
