@@ -47,7 +47,9 @@ jobs:
           node-version: 18
 
       - name: 🔽 Instalar dependências do Cypress
-        run: npm install
+        run: |
+          cd joavn-api/src/test/api
+          npm install
 
       - name: 🚀 Executar testes de API com Cypress
         run: npx cypress run --spec "cypress/e2e/api/**/*.cy.js"
@@ -62,7 +64,9 @@ jobs:
           node-version: 18
 
       - name: 🔽 Instalar dependências do Cypress
-        run: npm install
+        run: |
+          cd joavn-api/src/test/web
+          npm install
 
       - name: 🚀 Executar testes WEB com Cypress
         run: npx cypress run --spec "cypress/e2e/web/**/*.cy.js"
