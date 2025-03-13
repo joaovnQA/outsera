@@ -19,8 +19,10 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - name: 🔽 Instalar dependências do Maven
-        run: mvn clean install
+      - name: Build com Maven
+        run: |
+          cd joavn-api
+          mvn clean install
 
   start_application:
     needs: setup
