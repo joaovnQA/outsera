@@ -40,8 +40,17 @@ jobs:
         run: nohup mvn spring-boot:run > api.log 2>&1 &
 
       - name: ⏳ Aguardar a API estar disponível
-        run: sleep 20
-
+        run: |
+          for i in {1..120}; do  # 10 minutos (120 tentativas de 5s)
+          if curl -s http://localhost:8080/actuator/health | grep '"status":"UP"'; then
+          echo "✅ API está rodando!"
+          exit 0
+          fi
+          echo "⏳ Aguardando API iniciar... ($((i*5)) segundos)"
+          sleep 5
+          done
+          echo "❌ API não iniciou a tempo!"
+          exit 1
   api_tests:
     needs: start_application
     runs-on: ubuntu-latest
