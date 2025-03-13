@@ -64,7 +64,7 @@ jobs:
         run: npm install
 
       - name: 🚀 Executar testes de API com Cypress
-        run: npx cypress run --spec "cypress/e2e/api/**/*.cy.js"
+        run: npx cypress run
 
   web_tests:
     needs: start_application
@@ -88,4 +88,4 @@ jobs:
         run: npm install
 
       - name: 🚀 Executar testes WEB com Cypress
-        run: npx cypress run --spec "cypress/e2e/web/**/*.cy.js"
+        run: npx cypress run
