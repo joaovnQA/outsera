@@ -72,8 +72,7 @@ git clone https://github.com/joaovnQA/outsera.git
 
 ```
 
-```sh
-### 8. **Testes de Performance**
+### 8. **Testes de performance**
 ```
 
 ```sh
