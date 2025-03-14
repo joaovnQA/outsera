@@ -22,7 +22,7 @@ Esta API RESTful fornece informações sobre os produtores de filmes que tiveram
 - **H2 Database** (Banco de dados em memória)
 - **Cypress** (Testes End-to-End)
 - **Maven** (Gerenciamento de dependências)
-   --**Agente-AI** (Analise da cobertura de teste)
+- **Agente-AI** (Analise da cobertura de teste)
 
 ## 📦 **Instalação**
 
