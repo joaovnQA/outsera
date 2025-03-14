@@ -13,7 +13,7 @@ jobs:
       - name: 📥 Checkout do código
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0 # Garante que todo o histórico do repositório seja baixado
+          fetch-depth: 0
 
       - name: 📂 Verificar estrutura do repositório
         run: ls -R
@@ -42,28 +42,34 @@ jobs:
       - name: 🚀 Iniciar a aplicação com Spring Boot
         run: |
           cd joavn-api
-          nohup mvn spring-boot:run > api.log 2>&1 &
+          mvn spring-boot:run &
+          sleep 5
           echo "Iniciando aplicação..."
 
       - name: 🔎 Verificar processos em execução
-        run: ps aux | grep java
+        run: ps aux | grep java || echo "Nenhum processo Java encontrado!"
+
+      - name: 🔍 Testar conexão manual com API
+        run: |
+          sleep 5
+          curl -v http://localhost:8080 || echo "❌ API não respondeu!"
 
       - name: ⏳ Aguardar a API estar disponível
         run: |
           echo "Aguardando API..."
           for i in {1..30}; do
             if curl -s http://localhost:8080/actuator/health | grep '"status":"UP"'; then
-              echo "API está no ar!"
+              echo "✅ API está no ar!"
               exit 0
             fi
-            echo "Tentativa $i..."
+            echo "⏳ Tentativa $i..."
             sleep 5
           done
-          echo "A API não iniciou a tempo!" >&2
+          echo "❌ A API não iniciou a tempo!" >&2
           exit 1
 
-      - name: 📄 Verificar logs da API
-        run: cat joavn-api/api.log || true
+      - name: 📄 Exibir logs da API antes de falhar
+        run: cat joavn-api/api.log || echo "Nenhum log encontrado!"
 
   api_tests:
     needs: start_application
