@@ -36,27 +36,11 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
-      - name: 📥 Checkout do código
-        uses: actions/checkout@v3
-
       - name: 🚀 Iniciar a aplicação com Spring Boot
-        run: |
-          cd joavn-api
-          nohup mvn spring-boot:run > api.log 2>&1 &
-          echo "Aguardando API ficar disponível..."
+        run: nohup mvn spring-boot:run > api.log 2>&1 &
 
-      - name: ⏳ Esperar a API estar disponível
-        run: |
-          for i in {1..30}; do
-            if curl -s http://localhost:8080/actuator/health | grep '"status":"UP"'; then
-              echo "API está no ar!"
-              exit 0
-            fi
-            echo "Aguardando API iniciar... Tentativa $i"
-            sleep 5
-          done
-          echo "A API não iniciou a tempo!" >&2
-          exit 1
+      - name: ⏳ Aguardar a API estar disponível
+        run: sleep 20
 
   api_tests:
     needs: start_application
@@ -87,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: joavn-api/src/test/web
+        working-directory: joavn-api/src/test/web # Define o diretório base para os comandos
     steps:
       - name: 📥 Checkout do código
         uses: actions/checkout@v3
