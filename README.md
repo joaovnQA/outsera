@@ -73,9 +73,7 @@ git clone https://github.com/joaovnQA/outsera.git
 ```
 
 ### 8. **Testes de performance**
-```
 
-```sh
 - k6 run --out json=resultados.json load_test_get.js
 - node gerar_relatorio.js (Excutar para verificar o report dos testes de performance)
 ```
