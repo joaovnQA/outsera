@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0 # Garante que todo o histórico do repositório seja baixado
 
       - name: 📂 Verificar estrutura do repositório
-        run: ls -R # Lista todos os arquivos para depuração
+        run: ls -R
 
       - name: ☕ Instalar Java 21
         uses: actions/setup-java@v3
@@ -36,11 +36,34 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     steps:
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v3
+
       - name: 🚀 Iniciar a aplicação com Spring Boot
-        run: nohup mvn spring-boot:run > api.log 2>&1 &
+        run: |
+          cd joavn-api
+          nohup mvn spring-boot:run > api.log 2>&1 &
+          echo "Iniciando aplicação..."
+
+      - name: 🔎 Verificar processos em execução
+        run: ps aux | grep java
 
       - name: ⏳ Aguardar a API estar disponível
-        run: sleep 20
+        run: |
+          echo "Aguardando API..."
+          for i in {1..30}; do
+            if curl -s http://localhost:8080/actuator/health | grep '"status":"UP"'; then
+              echo "API está no ar!"
+              exit 0
+            fi
+            echo "Tentativa $i..."
+            sleep 5
+          done
+          echo "A API não iniciou a tempo!" >&2
+          exit 1
+
+      - name: 📄 Verificar logs da API
+        run: cat joavn-api/api.log || true
 
   api_tests:
     needs: start_application
@@ -71,7 +94,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: joavn-api/src/test/web # Define o diretório base para os comandos
+        working-directory: joavn-api/src/test/web
     steps:
       - name: 📥 Checkout do código
         uses: actions/checkout@v3
