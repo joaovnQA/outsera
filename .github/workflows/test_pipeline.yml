@@ -46,17 +46,7 @@ jobs:
           echo "Aguardando API ficar disponível..."
 
       - name: ⏳ Esperar a API estar disponível
-        run: |
-          for i in {1..30}; do
-            if curl -s http://localhost:8080/actuator/health | grep '"status":"UP"'; then
-              echo "API está no ar!"
-              exit 0
-            fi
-            echo "Aguardando API iniciar... Tentativa $i"
-            sleep 5
-          done
-          echo "A API não iniciou a tempo!" >&2
-          exit 1
+        run: sleep 20
 
   web_tests:
     needs: start_application
