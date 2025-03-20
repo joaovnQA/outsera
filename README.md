@@ -8,9 +8,10 @@ Esta API RESTful fornece informações sobre os produtores de filmes que tiveram
 
 ## 🚀 **Funcionalidades**
 
-- ✅ Obter o produtor com o maior intervalo entre dois prêmios consecutivos.
-- ✅ Obter o produtor que obteve dois prêmios mais rapidamente.
-- ✅ Testes automatizados com **Cypress**.
+- ✅ Fornecer uma API Rest onde seja possivel Consultar, Atualizar, Criar e Deletar dados.
+- ✅ Testes automatizados com **Cypress** para API e WEB.
+- ✅ Testes de performance com **K6**.
+- ✅ Testes mobile com **Robot + Appium**.
 - ✅ Logs detalhados para facilitar o debug e a auditoria das operações.
 
 ---
@@ -22,7 +23,7 @@ Esta API RESTful fornece informações sobre os produtores de filmes que tiveram
 - **H2 Database** (Banco de dados em memória)
 - **Cypress** (Testes End-to-End)
 - **Maven** (Gerenciamento de dependências)
-   --**Agente-AI** (Analise da cobertura de teste)
+- **Agente-AI** (Analise da cobertura de teste)
 
 ## 📦 **Instalação**
 
@@ -72,9 +73,7 @@ git clone https://github.com/joaovnQA/outsera.git
 
 ```
 
-```sh
-### 8. **Testes de Performance**
-```
+### 8. **Testes de performance**
 
 ```sh
 - k6 run --out json=resultados.json load_test_get.js
