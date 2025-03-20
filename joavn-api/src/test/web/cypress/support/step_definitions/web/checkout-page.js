@@ -1,54 +1,34 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import elements from "../../../fixtures/sign-up/elements";
-const typeUserName = "joaovn_";
-const typePassword = "Jna-9060";
-import { faker } from "@faker-js/faker";
+const typeUserName = "joaovn_1";
+const typePassword = "jna-3040";
 let bookName;
-Given("Adiciono um produto no carinho", () => {
-  cy.get('[class="card-title my-2"] a strong')
+
+When("realizo login", () => {
+  cy.get(elements.loginUserName).wait(600).type(typeUserName);
+  cy.get(elements.loginPassword).type(typePassword, { log: false });
+  cy.contains(elements.registerButton, "Log in").click({ force: true });
+});
+
+Given("Adiciono produto no carrinho", () => {
+  cy.get('[class="hrefch"]')
     .first()
     .invoke("text")
 
     .then((text) => {
       bookName = text.trim();
     });
-  cy.get('button:contains("Add to Cart")').first().click({ force: true });
-});
-When("Clico no botão do carinho", () => {
-  cy.get(elements.clickCarrinho).last().click();
+  cy.get('[class="card-img-top img-fluid"]').first().click({ force: true });
 });
 When("Valido que o produto selecionado foi armazenado corretamente", () => {
   cy.contains(bookName);
 });
-When("Clico no botão checkout", () => {
-  cy.contains("button", " CheckOut ").click();
+When("Clico em Add to cart", () => {
+  cy.contains("a", "Add to cart").click();
+  cy.on("window:alert", (text) => {
+    expect(text).to.equal("Product added");
+  });
 });
-Then("Realizo login", () => {
-  cy.get(elements.loginUserName).type(typeUserName, { log: false });
-  cy.get(elements.loginPassword).type(typePassword, { log: false });
-  cy.get(elements.loginButton).last().click({ force: true });
-});
-When("Valido que a tela de checkout foi acessada", () => {
-  cy.url().should("include", "/checkout");
-});
-
-When("Adiciono um livro no carrinho", () => {
-  cy.get('button:contains("Add to Cart")').first().click({ force: true });
-  cy.get(elements.clickCarrinho).last().click();
-  cy.contains("button", " CheckOut ").click();
-  cy.url().should("include", "/checkout");
-});
-When("Preencho os dados para entrega", () => {
-  cy.get(elements.addressName).type(faker.location.streetAddress());
-  cy.get(elements.address1).type(faker.location.secondaryAddress());
-  cy.get(elements.address2).type(faker.location.city());
-  cy.get(elements.pincode).type("123456");
-  cy.get(elements.state).type(faker.location.state());
-});
-When("Clico em  Place Order", () => {
-  cy.contains("button", " Place Order ").click();
-});
-When("Valido que a ordem foi gerada com sucesso", () => {
-  cy.url().should("include", "/myorders");
-  cy.get('[class*="orderId"]').eq(1).should("be.visible");
+When("Clico em cart no menu da pagina", () => {
+  cy.contains("a", "Cart").click();
 });

@@ -7,9 +7,6 @@ Feature: Signup
 
     Scenario: Registar um novo usuário
         Given Visito uma pagina web
-        When Acesso a pagina de login
-        And Clico em Register
-        And Valido que a pagina de register foi acessada com sucesso
-        Then Preencho o formulado de signup
-        And Clico em Register
+        When Acesso a pagina de signup
+        Then Preencho o formulario de signup
         And Valido que a conta foi criada com sucesso

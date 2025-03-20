@@ -1,3 +1,3 @@
 Cypress.Commands.add("visitWebPage", () => {
-  cy.visit("https://bookcart.azurewebsites.net/");
+  cy.visit("https://www.demoblaze.com/");
 });

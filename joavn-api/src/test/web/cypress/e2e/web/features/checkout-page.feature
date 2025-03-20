@@ -1,24 +1,34 @@
 Feature: Signup
-    Scenario: Validar que um produto é armazenado no carrinho de compra
+    Scenario: Realizar login com sucesso
         Given Visito uma pagina web
-        When Adiciono um produto no carinho
-        Then Clico no botão do carinho
-        And Valido que o produto selecionado foi armazenado corretamente
+        When Acesso a pagina de login
+        Then realizo login
 
-    Scenario: Acessar a tela de checkout
+    Scenario: Adiciono produto no carrinho
         Given Visito uma pagina web
-        And Acesso a pagina de login
-        When Realizo login
-        Then Adiciono um produto no carinho
-        And Clico no botão do carinho
-        And Clico no botão checkout
-        And Valido que a tela de checkout foi acessada
+        When Acesso a pagina de login
+        And realizo login
+        And Adiciono produto no carrinho
+        Then Valido que o produto selecionado foi armazenado corretamente
+        And Clico em Add to cart
 
-    Scenario: Confirma a compra dos produtos
+    Scenario: Acessar Cart page
         Given Visito uma pagina web
-        And Acesso a pagina de login
-        When Realizo login
-        Then Adiciono um livro no carrinho
-        And Preencho os dados para entrega
-        And Clico em  Place Order
-        And Valido que a ordem foi gerada com sucesso
+        When Acesso a pagina de login
+        And realizo login
+        Then Adiciono produto no carrinho
+        And Clico em Add to cart
+        And Clico em cart no menu da pagina
+        And valido que a pagina cart foi acessada
+
+    Scenario: Validar que a compra é realizada com sucesso
+        Given Visito uma pagina web
+        When Acesso a pagina de login
+        And realizo login
+        And Adiciono produto no carrinho
+        And Clico em Add to cart
+        Then Clico em cart no menu da pagina
+        And Clico em Place Order
+        And Preencho o Place order
+        And Clico em Purchase
+        And Confirmo que a compra foi realizada com sucesso

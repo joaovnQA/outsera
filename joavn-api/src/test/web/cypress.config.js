@@ -19,9 +19,8 @@ module.exports = defineConfig({
 
   e2e: {
     defaultCommandTimeout: 50000,
-
-    // 📌 Ajustando caminhos dos arquivos .feature e steps
-    specPattern: "**/features/**/*.feature", // 🔹 Certifica que os arquivos .feature são encontrados
+    failOnStatusCode: false,
+    specPattern: "**/features/**/*.feature",
 
     async setupNodeEvents(on, config) {
       await addCucumberPreprocessorPlugin(on, config);
